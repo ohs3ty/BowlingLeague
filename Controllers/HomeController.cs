@@ -12,15 +12,17 @@ namespace BowlingLeague.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly BowlingLeagueContext context;
+        //bring in database
+        public HomeController(ILogger<HomeController> logger, BowlingLeagueContext con)
         {
+            context = con;
             _logger = logger;
         }
 
         public IActionResult Index()
         {
-            return View();
+            return View(context.Bowlers.ToList());
         }
 
         public IActionResult Privacy()
