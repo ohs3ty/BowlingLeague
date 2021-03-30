@@ -4,12 +4,19 @@
 
 @model IEnumerable<Bowler>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
 
 @foreach (var x in Model)
 {
-    @x.BowlerFirstName
+    <h3>@x.getFullName()</h3>
+    <p>
+        Address: @x.BowlerAddress<br />
+        City: @x.BowlerCity<br />
+        State: @x.BowlerState<br />
+        Zip: @x.BowlerZip<br />
+        Phone #: @x.BowlerPhoneNumber
+    </p>
 }
+
+<div set-up-correctly="true">
+
+</div>

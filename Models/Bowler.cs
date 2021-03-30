@@ -25,5 +25,11 @@ namespace BowlingLeague.Models
 
         public virtual Team Team { get; set; }
         public virtual ICollection<BowlerScore> BowlerScores { get; set; }
+
+        public string getFullName()
+        {
+            string fullname = (this.BowlerFirstName + " " + this.BowlerMiddleInit + " " + this.BowlerLastName);
+            return fullname;
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using BowlingLeague.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,8 @@ namespace BowlingLeague.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly BowlingLeagueContext context;
+        private BowlingLeagueContext context;
+
         //bring in database
         public HomeController(ILogger<HomeController> logger, BowlingLeagueContext con)
         {
@@ -20,9 +22,22 @@ namespace BowlingLeague.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(long? teamid, int pageNum = 0)
         {
-            return View(context.Bowlers.ToList());
+            //.Where(x => x.RecipeTitle.Contains("Nachos"))
+            //.FromSqlInterpolated($"SELECT * FROM Recipes WHERE RecipeTitle LIKE {variable}")
+
+            int pageSize = 5;
+
+            return View(context.Bowlers
+                .Where(x => x.TeamId == teamid || teamid == null)
+                .OrderBy(x => x.BowlerLastName)
+                .Skip((pageNum - 1) * pageSize)
+                .Take(pageSize)
+                .ToList());
+
+                //.FromSqlInterpolated($"Select * FROM Bowlers WHERE TeamID = {teamid} OR {teamid} IS NULL")
+                //.ToList());
         }
 
         public IActionResult Privacy()
