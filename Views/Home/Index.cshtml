@@ -2,10 +2,10 @@
     ViewData["Title"] = "Home Page";
 }
 
-@model IEnumerable<Bowler>
+@model BowlingLeague.Models.ViewModels.IndexViewModel
 
 
-@foreach (var x in Model)
+@foreach (var x in Model.Bowlers)
 {
     <h3>@x.getFullName()</h3>
     <p>
@@ -17,6 +17,6 @@
     </p>
 }
 
-<div set-up-correctly="true">
+<div page-info="@Model.PageNumberingInfo">
 
 </div>

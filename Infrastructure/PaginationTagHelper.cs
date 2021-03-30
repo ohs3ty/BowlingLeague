@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using BowlingLeague.Models.ViewModels;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using System;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BowlingLeague.Infrastructure
 {
-    [HtmlTargetElement("div", Attributes = "set-up-correctly")]
+    [HtmlTargetElement("div", Attributes = "page-info")]
     public class PaginationTagHelper : TagHelper
     {
         private IUrlHelperFactory urlInfo;
@@ -18,6 +19,7 @@ namespace BowlingLeague.Infrastructure
         }
 
         public bool SetUpCorrectly { get; set; }
+        public PageNumberingInfo PageInfo { get; set; }
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {

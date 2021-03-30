@@ -1,4 +1,5 @@
 ﻿using BowlingLeague.Models;
+using BowlingLeague.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -29,20 +30,27 @@ namespace BowlingLeague.Controllers
 
             int pageSize = 5;
 
-            return View(context.Bowlers
-                .Where(x => x.TeamId == teamid || teamid == null)
-                .OrderBy(x => x.BowlerLastName)
-                .Skip((pageNum - 1) * pageSize)
-                .Take(pageSize)
-                .ToList());
+            return View(new IndexViewModel
+            {
+                Bowlers = context.Bowlers
+                    .Where(x => x.TeamId == teamid || teamid == null)
+                    .OrderBy(x => x.BowlerLastName)
+                    .Skip((pageNum - 1) * pageSize)
+                    .Take(pageSize)
+                    .ToList(),
+                PageNumberingInfo = new PageNumberingInfo
+                {
+                    NumPerPage = pageSize,
+                    CurrentPage = pageNum,
+
+                    //get total num items, if no meal selected get count of all
+                    TotalNum = (teamid == null? context.Bowlers.Count() :
+                        context.Bowlers.Where(x => x.TeamId == teamid).Count())
+                },
+            }); 
 
                 //.FromSqlInterpolated($"Select * FROM Bowlers WHERE TeamID = {teamid} OR {teamid} IS NULL")
                 //.ToList());
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
