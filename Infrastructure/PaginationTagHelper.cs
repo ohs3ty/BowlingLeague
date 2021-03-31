@@ -49,6 +49,7 @@ namespace BowlingLeague.Infrastructure
                 indvTag.Attributes["href"] = urlHelp.Action("Index", KeyValuePairs);
 
                 //add css
+                //page css
                 if (PageClassesEnabled)
                 {
                     indvTag.AddCssClass(PageClass);
