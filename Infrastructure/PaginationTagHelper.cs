@@ -1,6 +1,8 @@
 ﻿using BowlingLeague.Models.ViewModels;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.Routing;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using System;
 using System.Collections.Generic;
@@ -21,15 +23,29 @@ namespace BowlingLeague.Infrastructure
         public bool SetUpCorrectly { get; set; }
         public PageNumberingInfo PageInfo { get; set; }
 
+        //Dictionary with key value pairs
+        [HtmlAttributeName(DictionaryAttributePrefix = "page-url-")]
+        public Dictionary<string, object> KeyValuePairs { get; set; } = new Dictionary<string, object>();
+
+        [HtmlAttributeNotBound]
+        [ViewContext]
+        public ViewContext ViewContext { get; set; }
+
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
+            IUrlHelper urlHelp = urlInfo.GetUrlHelper(ViewContext); 
             TagBuilder finishedTag = new TagBuilder("div");
-            TagBuilder indvTag = new TagBuilder("a");
 
-            indvTag.Attributes["href"] = "/Bowler";
-            indvTag.InnerHtml.Append("gucci");
+            for (int i = 1; i <= PageInfo.NumPages; i++)
+            { 
+                TagBuilder indvTag = new TagBuilder("a");
 
-            finishedTag.InnerHtml.AppendHtml(indvTag);
+                KeyValuePairs["pageNum"] = i;
+                indvTag.Attributes["href"] = urlHelp.Action("Index", KeyValuePairs);
+                indvTag.InnerHtml.Append(i.ToString());
+
+                finishedTag.InnerHtml.AppendHtml(indvTag);
+            }
 
             output.Content.AppendHtml(finishedTag.InnerHtml); 
         }

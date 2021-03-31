@@ -23,7 +23,7 @@ namespace BowlingLeague.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index(long? teamid, int pageNum = 0)
+        public IActionResult Index(long? teamid, string team, int pageNum = 0)
         {
             //.Where(x => x.RecipeTitle.Contains("Nachos"))
             //.FromSqlInterpolated($"SELECT * FROM Recipes WHERE RecipeTitle LIKE {variable}")
@@ -47,6 +47,8 @@ namespace BowlingLeague.Controllers
                     TotalNum = (teamid == null? context.Bowlers.Count() :
                         context.Bowlers.Where(x => x.TeamId == teamid).Count())
                 },
+
+                TeamCategory = team
             }); 
 
                 //.FromSqlInterpolated($"Select * FROM Bowlers WHERE TeamID = {teamid} OR {teamid} IS NULL")

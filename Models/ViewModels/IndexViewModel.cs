@@ -9,6 +9,7 @@ namespace BowlingLeague.Models.ViewModels
     {
         public List<Bowler> Bowlers { get; set; }
         public PageNumberingInfo PageNumberingInfo { get; set; }
+        public string TeamCategory { get; set; }
 
     }
 }
