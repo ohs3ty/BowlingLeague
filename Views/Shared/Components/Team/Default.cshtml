@@ -4,13 +4,24 @@
 @{
 }
 @model IEnumerable<Team>
-
 <!--add team to url-->
-<a class="btn btn-block btn-outline-secondary"
-   asp-action="Index" asp-controller="Home" asp-route-teamid="">Home</a><br />
 
-@foreach(var x in Model)
+@if (ViewBag.Team == null)
+{
+    <a class="btn btn-block btn-success"
+       asp-action="Index" asp-controller="Home" asp-route-teamid="">Home</a>
+    <br />
+}
+else
+{
+    <a class="btn btn-block btn-outline-secondary"
+       asp-action="Index" asp-controller="Home" asp-route-teamid="">Home</a>
+    <br />
+}
+
+@foreach (var x in Model)
 {
     <a class="btn btn-block @(x.TeamName==ViewBag.Team ? "btn-success" : "btn-outline-secondary") "
-       asp-action="Index" asp-controller="Home" asp-route-teamid="@x.TeamId" asp-route-team="@x.TeamName">@x.TeamName</a><br />
+       asp-action="Index" asp-controller="Home" asp-route-teamid="@x.TeamId" asp-route-team="@x.TeamName">@x.TeamName</a>
+    <br />
 }
