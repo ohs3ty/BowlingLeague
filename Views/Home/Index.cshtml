@@ -4,10 +4,20 @@
 
 @model BowlingLeague.Models.ViewModels.IndexViewModel
 
+@if (ViewBag.TeamName != null)
+{
+    <h2 class="text-center" style="color: darkslateblue;">@ViewBag.TeamName</h2>
+
+}
+else
+{
+    <h2 class="text-center" style="color: darkslateblue;">All</h2>
+
+}
 
 @foreach (var x in Model.Bowlers)
 {
-    <h3>@x.getFullName()</h3>
+    <h4>@x.getFullName()</h4>
     <p>
         Address: @x.BowlerAddress<br />
         City: @x.BowlerCity<br />
@@ -17,6 +27,7 @@
     </p>
 }
 
-<div page-info="@Model.PageNumberingInfo" page-url-team="@Model.TeamCategory">
+<div page-info="@Model.PageNumberingInfo" page-url-team="@Model.TeamCategory" page-classes-enabled="true" page-class="btn" page-class-normal="btn-outline-dark"
+     page-class-selected="btn-primary" class="text-center btn-group pull-right m-1">
 
 </div>

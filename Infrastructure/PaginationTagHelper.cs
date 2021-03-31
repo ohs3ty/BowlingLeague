@@ -26,6 +26,11 @@ namespace BowlingLeague.Infrastructure
         //Dictionary with key value pairs
         [HtmlAttributeName(DictionaryAttributePrefix = "page-url-")]
         public Dictionary<string, object> KeyValuePairs { get; set; } = new Dictionary<string, object>();
+        public bool PageClassesEnabled { get; set; } = false;
+        public string PageClass { get; set; }
+        public string PageClassNormal { get; set; }
+        public string PageClassSelected { get; set; }
+
 
         [HtmlAttributeNotBound]
         [ViewContext]
@@ -42,6 +47,13 @@ namespace BowlingLeague.Infrastructure
 
                 KeyValuePairs["pageNum"] = i;
                 indvTag.Attributes["href"] = urlHelp.Action("Index", KeyValuePairs);
+
+                //add css
+                if (PageClassesEnabled)
+                {
+                    indvTag.AddCssClass(PageClass);
+                    indvTag.AddCssClass(i == PageInfo.CurrentPage ? PageClassSelected : PageClassNormal);
+                }
                 indvTag.InnerHtml.Append(i.ToString());
 
                 finishedTag.InnerHtml.AppendHtml(indvTag);

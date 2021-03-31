@@ -29,6 +29,7 @@ namespace BowlingLeague.Controllers
             //.FromSqlInterpolated($"SELECT * FROM Recipes WHERE RecipeTitle LIKE {variable}")
 
             int pageSize = 5;
+            ViewBag.TeamName = team;
 
             return View(new IndexViewModel
             {
